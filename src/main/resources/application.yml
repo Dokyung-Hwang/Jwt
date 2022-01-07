@@ -1,0 +1,36 @@
+spring:
+  # H2 DB 사용, 메모리상에 데이터를 저장
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+      # springboot 서버가 시작될 때마다 테이블들이 초기화
+      # SessionFactory 가 시작될 때 Drop, Create, Alter 종료될 때 Drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        # Console보기위한 설정
+
+    defer-datasource-initialization: true
+
+# 로깅 레벨 디버그로 설정
+logging:
+      level:
+        me.silvernine: DEBUG
+
+  #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
+  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400 #토큰 만료 시간(초)
