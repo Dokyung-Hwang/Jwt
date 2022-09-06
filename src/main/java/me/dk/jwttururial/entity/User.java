@@ -1,12 +1,7 @@
 package me.dk.jwttururial.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity // 데이터 베이스 테이블하고 1대1로 매핑되는 객체

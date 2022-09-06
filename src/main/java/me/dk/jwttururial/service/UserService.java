@@ -27,11 +27,12 @@ public class UserService {
     // 회원가입 로직을 수행하는 메서드
     @Transactional
     public User signup(UserDto userDto) {
+        // Username을 기준으로 DB에서 회원 정보가 있다면 런타임 예외 발생
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
 
-        // 권한 정보
+        // 권한 정보 생성
         Authority authority = Authority.builder()
                 .authorityName("ROLE_USER")
                 .build();
@@ -54,7 +55,7 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByUsername(username);
     }
 
-    // 현재 Security Context에 저장되어 있는 username에 해당하는 유저 정보와 권한 정보를 조회
+    // 현재 Security Context에 저장되 어 있는 username에 해당하는 유저 정보와 권한 정보를 조회
     @Transactional(readOnly = true)
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);

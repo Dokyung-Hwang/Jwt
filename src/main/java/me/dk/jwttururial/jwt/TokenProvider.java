@@ -1,4 +1,3 @@
-// 토큰의 생성, 토큰의 유효성 검증 등을 담당하는 클래스
 package me.dk.jwttururial.jwt;
 
 import io.jsonwebtoken.*;
@@ -21,6 +20,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+// token의 생성과 유효성을 검사하는 클래스
 @Component
 public class TokenProvider implements InitializingBean {
 
@@ -33,6 +33,7 @@ public class TokenProvider implements InitializingBean {
 
     private Key key;
 
+    // bean 의존성 주입
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
@@ -95,6 +96,7 @@ public class TokenProvider implements InitializingBean {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            // 토큰을 파라미터로 받아 파싱해보고 나오는 예외를 캐치
             return true;        // 문제 없을 경우
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             logger.info("잘못된 JWT 서명입니다.");

@@ -28,11 +28,13 @@ public class UserController {
         response.sendRedirect("/api/user");
     }*/
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<User> signup(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.signup(userDto));
     }
 
+    // 사용자 정보 조회
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('USER','ADMIN')") // USER_ROLE, ADMIN_ROLE 두 권한 모두 호출 가능한 api
     public ResponseEntity<User> getMyUserInfo() {
@@ -40,6 +42,7 @@ public class UserController {
     }
 
 
+    // 사용자 정보 조회(Username)
     @GetMapping("/user/{username}")
     @PreAuthorize("hasAnyRole('ADMIN')")    // ADMIN_ROLE 권한만 호출 가능한 api
     public ResponseEntity<User> getUserInfo(@PathVariable String username) {
